@@ -1,0 +1,24 @@
+<!doctype html>
+{# tutorial/templates/tutorial/people.html #}
+{% load static %}
+{% load render_table from django_tables2 %}
+<html>
+    <head>
+        <title>List of likest</title>
+    </head>
+    <body onload="setTimeout(function () { location.reload(1); }, 5000);">
+    <p style="text-align:center;"><button type="button"><a href="{% url 'index' %}">Memes</a></button></p>
+        <p style="text-align:center;">Top memes</p>
+        <p style="text-align:center;">{% for meme in memes %}</p>
+
+        <p style="text-align:center;">
+            <a href="{% url 'page' meme.meme_id %}">
+                <img class="center" src="{% get_static_prefix %}{{meme.url}}" alt="Meme">
+            </a>
+        </p>
+
+        <p style="text-align:center;">Лайков: {{ meme.likes }}</p>
+        {% endfor %}
+        {% render_table table %}
+    </body>
+</html>

@@ -10,6 +10,7 @@
     <button type="button"><a href="{% url 'skip' memo.meme_id %}">Skip</a></button>
     <button type="button"> {{ memo.likes }} </a></button>
     <button type="button"><a href="{% url 'like' memo.meme_id %}">Like</a></button>
+    <button type="button"><a href="{% url 'likest' %}">Records</a></button>
   </p>
   <p style="text-align:center;"><img class="center" src="{% get_static_prefix %}{{memo.url}}" alt="Meme"></p>
   </body>

@@ -7,18 +7,15 @@ from time import sleep
 import vk_requests
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+from django.views.generic import ListView
+from django_tables2 import tables
 
-from polls.models import Memo
+from polls.models import Memo, MemoTable
 
 
 def index(request):
-    # all = Memo.objects.all("-id")
-    # min = all.last().id
-    # max = all.first().id
-
     random_memo = Memo.objects.all().first()
     print(random_memo)
-    # return HttpResponse(f"{random_memo if random_memo else 'Memes empty'}")
     return render(request, 'memo.html', {'memo': random_memo})
 
 
@@ -101,6 +98,10 @@ def load(request):
     return HttpResponse(f"Loading {count} files successfully")
 
 
+def get_meme(meme_id):
+    return Memo.objects.get(meme_id=meme_id)
+
+
 def get_next_meme(meme_id):
     memes = Memo.objects.all()
     likest_meme = Memo.objects.order_by("-likes").first()
@@ -121,6 +122,10 @@ def get_next_meme(meme_id):
     return memes.first()
 
 
+def page(request, meme_id):
+    return render(request, 'memo.html', {'memo': get_meme(meme_id)})
+
+
 def skip(request, meme_id):
     return render(request, 'memo.html', {'memo': get_next_meme(meme_id)})
 
@@ -128,3 +133,21 @@ def skip(request, meme_id):
 def like(request, meme_id):
     Memo.objects.get(meme_id=meme_id).like().save()
     return render(request, 'memo.html', {'memo': get_next_meme(meme_id)})
+
+
+def likest(request):
+    return render(request, 'tops.html')
+
+
+class MemoListView(ListView):
+    model = Memo
+    template_name = 'tops.html'
+
+
+def tops_list(request):
+    memes = Memo.objects.all().order_by("-likes")
+    table = MemoTable(memes)
+
+    return render(request, "tops.html", {
+        "table": table, "memes": memes
+    })

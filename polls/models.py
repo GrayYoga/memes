@@ -1,4 +1,5 @@
 from django.db import models
+import django_tables2 as tables
 
 
 class Memo(models.Model):
@@ -11,3 +12,8 @@ class Memo(models.Model):
     def like(self):
         self.likes += 1
         return self
+
+
+class MemoTable(tables.Table):
+    class Meta:
+        model = Memo
