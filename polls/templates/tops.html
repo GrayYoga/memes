@@ -1,7 +1,6 @@
 <!doctype html>
 {# tutorial/templates/tutorial/people.html #}
 {% load static %}
-{% load render_table from django_tables2 %}
 <html>
     <head>
         <title>List of likest</title>
@@ -19,6 +18,5 @@
 
         <p style="text-align:center;">Лайков: {{ meme.likes }}</p>
         {% endfor %}
-        {% render_table table %}
     </body>
 </html>

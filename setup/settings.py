@@ -42,7 +42,6 @@ INSTALLED_APPS = [
 
     'memes.apps.MemesConfig',
     'polls.apps.PollsConfig',
-    'django_tables2',
 ]
 
 MIDDLEWARE = [

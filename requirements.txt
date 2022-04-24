@@ -4,7 +4,6 @@ beautifulsoup4==4.11.1
 certifi==2021.10.8
 charset-normalizer==2.0.12
 Django==4.0.4
-django-tables2==2.4.1
 idna==3.3
 requests==2.27.1
 six==1.16.0

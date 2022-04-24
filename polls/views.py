@@ -8,9 +8,8 @@ import vk_requests
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.views.generic import ListView
-from django_tables2 import tables
 
-from polls.models import Memo, MemoTable
+from polls.models import Memo
 
 
 def index(request):
@@ -146,8 +145,7 @@ class MemoListView(ListView):
 
 def tops_list(request):
     memes = Memo.objects.all().order_by("-likes")
-    table = MemoTable(memes)
 
     return render(request, "tops.html", {
-        "table": table, "memes": memes
+        "memes": memes
     })
