@@ -1,5 +1,6 @@
 import datetime
 import os
+import random
 import urllib
 from time import sleep
 
@@ -100,24 +101,30 @@ def load(request):
     return HttpResponse(f"Loading {count} files successfully")
 
 
-def skip(request, meme_id):
+def get_next_meme(meme_id):
     memes = Memo.objects.all()
-    for i in range(0, memes.count() - 1):
-        if memes[i].meme_id == meme_id:
-            print(f"Found next of id={meme_id}, this is {memes[i + 1].meme_id}")
-            return render(request, 'memo.html', {'memo': memes[i + 1]})
-    return render(request, 'memo.html', {'memo': memes.first()})
+    likest_meme = Memo.objects.order_by("-likes").first()
+    print(f"Liked meme {likest_meme.meme_id} {likest_meme.likes}. Search meme {meme_id} in {memes.count()} memes")
+    i = 0
+    while (i + meme_id % 50) < (memes.count() - 1):
+        i += meme_id % random.randrange(1, 50) + 1
+        if meme_id % 10 in range(0, 4):
+            print(f"Fortune! Return likest meme {likest_meme.meme_id}")
+            return likest_meme
+        print(f"See {memes[i].meme_id}")
+        print(f"Get next of id={meme_id} on step {i}, this is {memes[i].meme_id}")
+        if memes[i].likes > likest_meme.likes - 10:
+            print(
+                f"Memes {memes[i].meme_id} overliked (his likes {memes[i].likes}, top likes {likest_meme.likes}), skipping him.")
+            continue
+        return memes[i]
+    return memes.first()
+
+
+def skip(request, meme_id):
+    return render(request, 'memo.html', {'memo': get_next_meme(meme_id)})
 
 
 def like(request, meme_id):
-    # print("------------")
-    # print(Memo.objects.get(meme_id=meme_id).meme_id)
-    # print("------------")
     Memo.objects.get(meme_id=meme_id).like().save()
-    memes = Memo.objects.all()
-    for i in range(0, memes.count() - 1):
-        print(f"Step {i} Meme:", memes[i].meme_id, memes[i].url)
-        if memes[i].meme_id == meme_id:
-            print(f"Found next of id={meme_id} on step {i}, this is {memes[i + 1].meme_id}")
-            return render(request, 'memo.html', {'memo': memes[i + 1]})
-    return render(request, 'memo.html', {'memo': memes.first()})
+    return render(request, 'memo.html', {'memo': get_next_meme(meme_id)})
