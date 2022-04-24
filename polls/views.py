@@ -1,10 +1,7 @@
-import datetime
-import os
 import random
 import urllib
 from time import sleep
 
-import vk_requests
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.views.generic import ListView
