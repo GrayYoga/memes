@@ -22,6 +22,7 @@ def index(request):
 
 
 def load(request):
+    # VK loader
     # api = vk_requests.create_api(
     #     service_token="9b5bcc15c700005782006cef63a910a4f0b4415d08c8a12539549407de684a8e08e29ea895b95f741c2b9")
     # count = 0
@@ -34,6 +35,16 @@ def load(request):
     #         user = api.users.get(user_ids=photo['user_id'])[0]
     #         print(f"author {user['id']} {user['first_name']} {user['last_name']} {photo['album_id']}-{photo['id']}.jpg")
     #         urllib.request.urlretrieve(big["url"], f"polls/files/{photo['album_id']}-{photo['id']}.jpg")
+    #         Memo(
+    #             meme_id=photo['id'],
+    #             author_id=user['id'],
+    #             url=f"{photo['album_id']}-{photo['id']}.jpg",
+    #             likes=0,
+    #         ).save()
+    #         count += 1
+    #         sleep(0.2)
+
+    # another resourse loader
     urls = ("1487222271_uvesobtrbhc.jpg\n"
             "1487222224_zcdf4fh9iyo.jpg\n"
             "1487222216_rpaisnizmmq.jpg\n"
