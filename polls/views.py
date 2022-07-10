@@ -152,7 +152,7 @@ def tops_list(request):
 
 @csrf_exempt
 def points20(request):
-    request_message = request.json.loads(request.body)
+    request_message = json.loads(request.body)
     derived_session_fields = ['session_id', 'user_id', 'message_id']
     response_message = {
         "response": {
