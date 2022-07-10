@@ -9,5 +9,6 @@ urlpatterns = [
     path('<int:meme_id>', views.page, name='page'),
     path('like/<int:meme_id>', views.like, name='like'),
     path('skip/<int:meme_id>', views.skip, name='skip'),
-    path("likest/", views.tops_list, name='likest')
+    path("likest/", views.tops_list, name='likest'),
+    path("points20/", views.points20, name='points20')
 ]
