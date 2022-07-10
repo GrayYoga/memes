@@ -5,6 +5,7 @@ from time import sleep
 
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView
 
 from polls.models import Memo
@@ -149,6 +150,7 @@ def tops_list(request):
     })
 
 
+@csrf_exempt
 def points20(request):
     request_message = request.json.loads(request.body)
     derived_session_fields = ['session_id', 'user_id', 'message_id']
